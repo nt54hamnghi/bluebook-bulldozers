@@ -1,0 +1,72 @@
+{
+  "default": {
+    "bootstrap": true,
+    "min_samples_leaf": 3,
+    "min_samples_split": 5,
+    "n_jobs": -1
+  },
+  "description": "\n     _For the explanation on __Random Forest__ and base models, please choose __Random Forest__ under \"Select Model\"_.\n\n    __Extra Trees__ is a variant of __Random Forest__. One substantial difference between the two models is the choice of base models. While __Random Forest__ uses the conventional __Decision Tree__, __Extra Trees__ takes advantage of another tree-based learner, also called __Extra Tree__ but in the singular form.\n\n    __Extra Tree__ selects the node condition randomly instead of exhaustively. Thanks to the random nature, its execution time improves significantly. The fast processing time comes with the price of low accuracy. Randomly picking a decision means neglecting the difference between data points. To compensate, an __Extra Tree__ learns on all data points (a __Decision Tree__ in __Random Forest__ fits on only a subset). However, to make it flexible, the implementation bellow allows changing the fraction of data points.\n\n    Finally, empirical evidence shows that in cases where __Random Forest__ overfit severely, __Extra Trees__ is more resilient.\n\n    [More information](https://quantdare.com/what-is-the-difference-between-extra-trees-and-random-forest/)\n    ",
+  "params": {
+    "bootstrap":{
+      "args": {
+        "help": "Whether subset samples for each tree. If \"No\", each tree will use all samples.",
+        "index": 1,
+        "label": "Bootstrap Condition",
+        "options": [
+          true,
+          false
+        ]
+      },
+      "column": 1,
+      "widget": "radio"
+    },
+    "max_depth": {
+      "args": {
+        "help": "Higher values increase accuracy but slow down the execution time and is prone to overfit. Setting to 0 means you let the algorithm choose the optimal depth.\n Hence, trees won't have the same depth.",
+        "label": "Depth of each tree",
+        "max_value": 50,
+        "min_value": 0,
+        "step": 5,
+        "value": 35
+      },
+      "column": 0,
+      "widget": "slider"
+    },
+    "max_features": {
+      "args": {
+        "help": "How many features to consider as a split candidate at each node. Fewer features can increase randomness, making the model resilient to overfitting. More features can increase accuracy but is prone to overfitting.",
+        "label": "Maximum fraction of variables used at each node",
+        "max_value": 1.0,
+        "min_value": 0.3,
+        "step": 0.1,
+        "value": 0.5
+      },
+      "column": 0,
+      "widget": "slider"
+    },
+    "max_samples": {
+      "args": {
+        "help": "Higher values increase accuracy but slow down the execution time and is prone to overfitting.",
+        "label": "Maximum fraction of samples for each tree",
+        "max_value": 1.0,
+        "min_value": 0.3,
+        "step": 0.1,
+        "value": 0.5
+      },
+      "column": 1,
+      "widget": "depend"
+    },
+    "n_estimators": {
+      "args": {
+        "help": "The more trees, the higher accuracy, but the slower training time. Setting to 1 simulates one single tree",
+        "label": "Number of trees",
+        "max_value": 100,
+        "min_value": 1,
+        "step": 1,
+        "value": 30
+      },
+      "column": 0,
+      "widget": "slider"
+    }
+  }
+}

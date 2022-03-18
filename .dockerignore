@@ -1,0 +1,25 @@
+# ignore .git and .cache folders
+.gitignore
+.git/
+.cache/
+
+# ignore project folders irrelevant to app
+analysis/
+models/
+tests/
+docs/
+
+# ignore project files irrelevant to app
+.bumpversion.cfg
+.gitlab-ci.yml
+.dockerignore
+azure-pipelines.yml
+Dockerfile
+Makefile
+README.md
+
+# python cache and env
+**/*.pyc
+__pycache__
+.pytest_cache
+venv/

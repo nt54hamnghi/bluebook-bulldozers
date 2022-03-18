@@ -1,0 +1,59 @@
+{
+  "default": {
+    "bootstrap": true,
+    "min_samples_leaf": 3,
+    "min_samples_split": 5,
+    "n_jobs": -1
+  },
+  "description": "\n    __Random Forest__ is an ensemble model, meaning that it comprises several independent simple models, also called base model. The typical base model of __Random Forest__ is __Decision Tree__.\n\n    A tree consists of nodes and leaves connected by branches. A top node is called the root, the subsequent nodes are internal nodes, and the ones having no outcoming branches are leaves, short for leaf nodes. Each node has a binary split/decision that defines how to travel to the next node.\n\n    This sequence of splits divides the data into multiple groups, and each has a special pattern that can describe the response variable. __Decision Tree__ finds the best decision by iterating through all the values of an explanatory variable and across all variables. The metric determining the quality of a split depends on the users, but common ones for regression are squared error and absolute error and for classification are impurity and entropy.\n\n    _To simulate a __Decision Tree__, set \"Number of trees\" to 1_\n\n    However, A __Decision Tree__ suffers from overfitting due to its exhaustive searching nature. __Random Forest__ emerges as a solution to this problem. Each tree in a __Random Forest__ learns on a random subset of data, usually called a bag, and it can overfit however it wants, and it will produce errors on other unseen bags.  By aggregating these random errors, the overall forest does have severe biases for any specific data subsets. On a higher level, combining several trees means collecting and incorporating multiple aspects of the data.\n\n    The final prediction is the average of the base models' outcomes. In other words, all base models have an equal say in the final result.\n\n    For more information:\n\n    * [Decision Tree](https://en.wikipedia.org/wiki/Decision_tree_learning)\n    * [Random Forest](https://en.wikipedia.org/wiki/Random_forest)\n    ",
+  "params": {
+    "max_depth": {
+      "args": {
+        "help": "Higher values increase accuracy but slow down the execution time and is prone to overfit. Setting to 0 means you let the algorithm choose the optimal depth.\n Hence, trees won't have the same depth.",
+        "label": "Depth of each tree",
+        "max_value": 50,
+        "min_value": 0,
+        "step": 5,
+        "value": 35
+      },
+      "column": 0,
+      "widget": "slider"
+    },
+    "max_features": {
+      "args": {
+        "help": "How many features to consider as a split candidate at each node. Fewer features can increase randomness, making the model resilient to overfitting. More features can increase accuracy but is prone to overfitting.",
+        "label": "Maximum fraction of variables used at each node",
+        "max_value": 1.0,
+        "min_value": 0.3,
+        "step": 0.1,
+        "value": 0.5
+      },
+      "column": 1,
+      "widget": "slider"
+    },
+    "max_samples": {
+      "args": {
+        "help": "Higher values increase accuracy but slow down the execution time and is prone to overfitting.",
+        "label": "Maximum fraction of samples for each tree",
+        "max_value": 1.0,
+        "min_value": 0.3,
+        "step": 0.1,
+        "value": 0.5
+      },
+      "column": 0,
+      "widget": "slider"
+    },
+    "n_estimators": {
+      "args": {
+        "help": "The more trees, the higher accuracy, but the slower training time. Setting to 1 simulates one single tree",
+        "label": "Number of trees",
+        "max_value": 100,
+        "min_value": 1,
+        "step": 1,
+        "value": 30
+      },
+      "column": 1,
+      "widget": "slider"
+    }
+  }
+}

@@ -1,0 +1,10 @@
+####### requirements.txt #######
+# Install the package requirements specified in setup.py
+# See discussion here for details:
+# https://packaging.python.org/discussions/install-requires-vs-requirements/
+#
+####### Requirements without Version Specifiers ######
+
+#
+###### Requirements with Version Specifiers ######
+# See https://www.python.org/dev/peps/pep-0440/#version-specifiers

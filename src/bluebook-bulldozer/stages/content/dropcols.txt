@@ -1,0 +1,4 @@
+If you had inspected the Feature Description section (in the Introduction stage), you may have noticed that there are some variables that we can drop. They are `SalesID`, `fiModelDesc`, and `ProductGroup`.
+* `SalesID` is the unique identifier of each sale, meaning that it does not bear any predictive power.
+* `fiModelDesc` is the description of `ModelID`, and it's also the concatenation of `fiBaseModel`, `fiSecondaryDesc`, `fiModelSeries`, and `fiModelDescriptor`. Therefore, we will not lose any information if we drop it.
+* Similarly, `ProductGroup` is the abbreviation of `ProductGroupDesc`, so we can drop it.

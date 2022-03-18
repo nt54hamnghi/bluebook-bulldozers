@@ -1,0 +1,5 @@
+This web application provides an interactive environment to experiment with different stages in a data science pipeline. These stages include EDA (Explanatory Data Analysis), Feature Engineering, Modeling, and Feature Selection. The formal definitions are available below. Also, each stage will have its respective page, and you can navigate between the pages using the sidebar, which is accessible from the top left corner of this page.
+
+To get started, we need a data set and an objective in mind. The data we will be using is a collection of bulldozer auction sales. Each row represents a sale and contains various information such as identifier, specification, date of sale, etc. It comes in with two different partitions, a training set and a validation set. The former includes sales from the past to 2011, while the latter are sales in 2012. The complete data is available at: <https://www.kaggle.com/c/bluebook-for-bulldozers/data>.
+
+The goal is to analyze the training set and develop a model capable of predicting the auction prices in the validation set.

@@ -1,0 +1,83 @@
+{
+  "default": {
+    "max_features": "log2",
+    "min_samples_leaf": 9,
+    "subsample": 0.7,
+    "validation_fraction": 0.25
+  },
+  "description": "\n__Random Forest__ and __Extra Trees__ belong to the __Bagging__ class of the ensemble method. Another type of ensemble is __Boosting__, with a well-known implementation called __Gradient Boost__.\n\nTrees in __Gradient Boost__ are sequential instead of independent. Training starts with a naive model, usually one predicting the mean for all samples.\n\nUsing the predictions, the model calculates the residuals, i.e., the difference between a true value and a predicted one.\n\nNext, __Gradient Boost__ fits a base model, usually a tree-based one, on these residuals. To re-emphasize, this new model learns on the residuals of the previous one (the naive one) instead of the actual response values.\n\nThis newly trained model can produce predicted residuals. To avoid overfitting, these values are scaled by a factor called the __learning rate__. Then, __Gradient Boost__ computes new predictions by adding the naive model's result to the predicted residuals.\n\nThe process is repeated. Each subsequent tree attempts to optimize the residuals of its predecessor. Training stops when adding more trees does not improve the performance or when the requested number of trees is satisfied.\n\nFor a thorough explaination: <https://www.youtube.com/watch?v=3CC4N4z3GJc>\n\nFor a mathematical walk-through: <https://www.youtube.com/watch?v=2xudPOBz-vs&t=1077s>\n",
+  "params": { 
+    "learning_rate": {
+      "args": {
+        "help": "Learning rate determines how to scale the resulting trees. A high learning rate converges faster but easily overfits.",
+        "label": "Learning rate",
+        "max_value": 1.0,
+        "min_value": 0.01,
+        "step": 0.01,
+        "value": 0.05
+      },
+      "column": 0,
+      "widget": "slider"
+    },
+    "max_depth": {
+      "args": {
+        "help": "Higher values increase accuracy but slow down the execution time and is prone to overfit.",
+        "label": "Depth of each tree",
+        "max_value": 30,
+        "min_value": 3,
+        "step": 1,
+        "value": 16
+      },
+      "column": 0,
+      "widget": "slider"
+    },
+    "n_estimators": {
+      "args": {
+        "help": "Higher values increase accuracy but slow down the execution time and is prone to overfit.",
+        "label": "Number of iterations",
+        "max_value": 200,
+        "min_value": 100,
+        "step": 10,
+        "value": 150
+      },
+      "column": 0,
+      "widget": "slider"
+    },
+    "n_iter_no_change": {
+      "args": {
+        "help": "How many iterations of no improvement to wait before interrupting.",
+        "label": "The number of rounds of without changes",
+        "max_value": 30,
+        "min_value": 5,
+        "step": 5,
+        "value": 10
+      },
+      "column": 1,
+      "widget": "depend"
+    },
+    "subsample": {
+      "args": {
+        "help": "Higher values increase accuracy but slow down the execution time and is prone to overfitting.",
+        "label": "Fraction of samples for each tree",
+        "max_value": 1.0,
+        "min_value": 0.0,
+        "step": 0.1,
+        "value": 0.7
+      },
+      "column": 1,
+      "widget": "slider"
+    },
+    "early_stopping": {
+      "args": {
+        "help": "Whether to stop training if the evaluation score does not improve.",
+        "label": "Early stopping conditions",
+        "options": [
+          true,
+          false
+        ]
+      },
+      "column": 1,
+      "widget": "radio"
+    }
+  }
+}
