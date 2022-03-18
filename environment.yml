@@ -1,0 +1,11 @@
+name: streamlit
+channels:
+  - defaults
+dependencies:
+  - python=3.10
+  - pip
+  - scikit-learn
+  - pandas
+  - seaborn
+  - matplotlib
+prefix: /home/hamnghi/anaconda3/envs/streamlit
