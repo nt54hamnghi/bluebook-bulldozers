@@ -1,4 +1,4 @@
-# place for legacy, i.e. replaced with better implementation, code 
+# place for legacy, i.e. replaced with better implementation, code
 
 
 # def loggit(logger: logging.Logger):
