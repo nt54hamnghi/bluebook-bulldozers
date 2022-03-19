@@ -1,5 +1,5 @@
-import utils
 import pathlib
+import utils as ut
 import streamlit as st
 
 from typing import Any
@@ -15,7 +15,7 @@ class BaseSetup:
     config_file: str
 
     def __call__(self) -> dict[str, Any]:
-        self.container_configs = utils.read_json(
+        self.container_configs = ut.read_json(
             json_name=JSON_DIR / self.config_file, as_namespace=True
         )
         description = self.container_configs.description

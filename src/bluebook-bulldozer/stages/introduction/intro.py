@@ -1,4 +1,4 @@
-import utils
+import utils as ut
 import pandas as pd
 import streamlit as st
 import plotly.graph_objects as go
@@ -33,12 +33,12 @@ def run(train: pd.DataFrame, valid: pd.DataFrame) -> None:
     # 1. overview
     with overview:
         st.subheader("1. Overview")
-        utils.display_content(CONTENT_DIR / "overview.txt")
+        ut.display_content(CONTENT_DIR / "overview.txt")
 
     # 2. data
     with data:
         st.subheader("2. Data")
-        utils.display_header("A look at the data", 4)
+        ut.display_header("A look at the data", 4)
         st.markdown("The first 20 samples:")
         st.caption(
             "__NOTE__: Hover on the feature name to see its full name."
@@ -46,17 +46,17 @@ def run(train: pd.DataFrame, valid: pd.DataFrame) -> None:
 
         # load data description
         data_dict = _load_data_dict()
-        utils.styleit(st.dataframe)(train.head(20), height=1000)
+        ut.styleit(st.dataframe)(train.head(20), height=1000)
 
         st.write(
             f"Shape:\n\nTraining Set:`{train.shape}`\n\nValidation Set:`{valid.shape}`" # NOQA
         )  # noqa
 
         # drop-down box for selecting feature to display description
-        utils.display_header("Feature Description", 4)
+        ut.display_header("Feature Description", 4)
         feat = st.selectbox("Select feature", options=data_dict.index)
         desc = data_dict.loc[feat].values[0].strip().capitalize()
-        utils.display_header(f"Description:\n{desc}", 6)
+        ut.display_header(f"Description:\n{desc}", 6)
 
         # display summary of the chosen feature
         try:
@@ -68,7 +68,7 @@ def run(train: pd.DataFrame, valid: pd.DataFrame) -> None:
             info["na count"] = x.isna().sum()
             info["data type"] = "category" if x.dtype == "object" else x.dtype
 
-            utils.display_header("Summary: ", 6)
+            ut.display_header("Summary: ", 6)
 
             summary_col, plot_col = st.columns(spec=[1, 3])
             with summary_col:
@@ -77,11 +77,13 @@ def run(train: pd.DataFrame, valid: pd.DataFrame) -> None:
 
             with plot_col:
                 histogram = go.Histogram(x=x, nbinsx=45)
-                utils.render(
-                    histogram,
-                    height=525,
-                    xaxis_title=feat,
-                    yaxis_title="Count",
+                ut.render(
+                    go.Figure(data=histogram),
+                    layout=dict(
+                        height=525,
+                        xaxis_title=feat,
+                        yaxis_title="Count",
+                    )
                 )
 
         st.warning(
