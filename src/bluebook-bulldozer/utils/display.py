@@ -55,18 +55,18 @@ def display_metric(
 
 @singledispatch
 def set_style(arg: pd.DataFrame | Styler) -> Styler:
-    ...
+    raise NotImplementedError(type(arg))
 
 
 @set_style.register
-def _(styler: Styler) -> Styler:
+def style_styler(styler: Styler) -> Styler:
     return styler.pipe(
         lambda s: s.format(precision=4, na_rep=" ").set_properties(**DF_STYLE)
     )
 
 
 @set_style.register
-def _(df: pd.DataFrame) -> Styler:
+def style_dataframe(df: pd.DataFrame) -> Styler:
     return df.style.format(precision=4, na_rep=" ").set_properties(**DF_STYLE)
 
 
