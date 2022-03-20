@@ -47,11 +47,6 @@ def _create_axes(nrows: int, ncols: int) -> np.ndarray:
     return np.array(list(product(row, col)))
 
 
-class Axis(NamedTuple):
-    x: int
-    y: int
-
-
 class AxesLabel(NamedTuple):
     xlabel: str
     ylabel: str
@@ -68,17 +63,16 @@ def subplots(traces: list[Trace], nrows: int, ncols: int) -> Figure:
         raise ValueError(
             "Number of graphs is not compatible to number of subplots."
         )
-    fig = make_subplots(rows=nrows, cols=ncols)
+    fig = make_subplots(rows=nrows, cols=ncols, subplot_titles=["a", "b"])
     axes = _create_axes(nrows, ncols)
     for trace, ax in zip(traces, axes):
-        ax = Axis(*ax)
-        fig.add_trace(trace.graph, row=ax.x, col=ax.y)
+        fig.add_trace(trace.graph, row=ax[0], col=ax[1])
         fig.update_xaxes(
             title_text=trace.labels.xlabel,
-            row=ax.x, col=ax.y
+            row=ax[0], col=ax[1]
         )
         fig.update_yaxes(
             title_text=trace.labels.ylabel,
-            row=ax.x, col=ax.y
+            row=ax[0], col=ax[1]
         )
     return fig

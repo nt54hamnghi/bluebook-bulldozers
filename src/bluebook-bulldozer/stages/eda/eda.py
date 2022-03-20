@@ -2,9 +2,9 @@ import numpy as np
 import utils as ut
 import pandas as pd
 import streamlit as st
-import plotly.graph_objects as go
 
 from dirs import CONTENT_DIR
+from stages.eda import numerical
 
 
 def run(train: pd.DataFrame, valid: pd.DataFrame) -> None:
@@ -27,28 +27,9 @@ def run(train: pd.DataFrame, valid: pd.DataFrame) -> None:
         ut.display_content(CONTENT_DIR / "summary.txt")
 
     train["YearMade"] = train["YearMade"].replace(1000, np.nan)
+    train["MachineHoursCurrentMeter"] = train[
+        "MachineHoursCurrentMeter"
+    ].replace(0, np.nan)
 
     with numvars:
-        st.subheader("2. Numerical Variables")
-        ut.display_header("`Yearmade`", 4)
-        ut.display_content(CONTENT_DIR / "yearmade.txt")
-
-        year_grps = train.groupby("YearMade")["SalePrice"].mean()
-
-        boxplot = ut.Trace(
-            go.Box(
-                x=train["YearMade"], boxpoints="outliers",
-                quartilemethod="inclusive",
-                name=""
-            ),
-            ut.AxesLabel("Year Made", "")
-        )
-        lineplot = ut.Trace(
-            go.Scatter(
-                x=year_grps.index, y=year_grps,
-                mode="lines", name="lines"
-            ),
-            ut.AxesLabel("Year Made", "Mean Sale Price")
-        )
-        fig = ut.subplots([boxplot, lineplot], nrows=1, ncols=2)
-        ut.render(fig, layout=dict(height=400, showlegend=False))
+        numerical.run(train)
