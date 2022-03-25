@@ -6,7 +6,7 @@ import plotly.graph_objects as go
 from dirs import DATA_DIR, CONTENT_DIR
 
 
-@st.experimental_memo(show_spinner=False)
+@st.experimental_singleton(show_spinner=False)
 def _load_data_dict() -> pd.DataFrame:
     data_dict = pd.read_feather(DATA_DIR / "data_dict.feather")
     data_dict.Variable.replace(
@@ -66,7 +66,7 @@ def run(dataframe: pd.DataFrame) -> None:
         else:
             info = x.describe().to_dict()
             info["na count"] = x.isna().sum()
-            info["data type"] = "category" if x.dtype == "object" else x.dtype
+            info["data type"] = x.dtype
 
             ut.display_header("Summary: ", 6)
 

@@ -12,7 +12,7 @@ def _load_data(filename: str) -> pd.DataFrame:
     return pd.read_feather(DATA_DIR / filename)
 
 
-@st.experimental_memo(show_spinner=False)
+@st.experimental_singleton(show_spinner=False)
 def _prepare_data() -> dict[str, tuple[pd.DataFrame, ...]]:
     # Raw data
     raw_train = _load_data("raw_train.feather")
