@@ -37,8 +37,6 @@ def main():
     raw_train = data["raw"][0]
     xtrn, xval, ytrn, yval = data["trn_valid"]
 
-    print(raw_train)
-
     # match page/stage
     if stage == "Introduction":
         stages.intro.run(raw_train)
