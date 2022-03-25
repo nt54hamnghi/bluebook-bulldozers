@@ -1,21 +1,31 @@
+import itertools
 import numpy as np
 import colormap as cm
+import pandas as pd
 import seaborn as sns
 import streamlit as st
+import plotly.express as px
 
-# import plotly.graph_objects as go
-
-from itertools import product
-from typing import NamedTuple
-from plotly.basedatatypes import BaseTraceType
 from plotly.graph_objects import Figure
 from plotly.subplots import make_subplots
+from plotly.basedatatypes import BaseTraceType
+from typing import Any, Callable, NamedTuple, Optional
 
 PRIMARY_COLOR = "#636efa"
 CM_BLUE = sns.dark_palette(color=PRIMARY_COLOR, as_cmap=True)
 BASE_LAYOUT = dict(
     autosize=False, height=600, margin=dict(l=1, r=1, b=1, t=1)
 )
+
+
+class AxesLabel(NamedTuple):
+    xlabel: str
+    ylabel: str
+
+
+class TraceContainer(NamedTuple):
+    graph: BaseTraceType | list[BaseTraceType]
+    labels: AxesLabel
 
 
 def cmap2hexlist(
@@ -44,35 +54,66 @@ def render(fig: Figure, layout=None) -> None:
 def _create_axes(nrows: int, ncols: int) -> np.ndarray:
     row = np.arange(1, nrows + 1)
     col = np.arange(1, ncols + 1)
-    return np.array(list(product(row, col)))
+    return np.array(list(itertools.product(row, col)))
 
 
-class AxesLabel(NamedTuple):
-    xlabel: str
-    ylabel: str
+def subplots(
+    trace_container: list[TraceContainer], nrows: int, ncols: int
+) -> Figure:
 
-
-class Trace(NamedTuple):
-    graph: BaseTraceType
-    labels: AxesLabel
-
-
-def subplots(traces: list[Trace], nrows: int, ncols: int) -> Figure:
-
-    if len(traces) != ncols * nrows:
+    # check if the number of subplots is equal to the number of traces
+    if len(trace_container) != ncols * nrows:
         raise ValueError(
             "Number of graphs is not compatible to number of subplots."
         )
-    fig = make_subplots(rows=nrows, cols=ncols, subplot_titles=["a", "b"])
+    fig = make_subplots(rows=nrows, cols=ncols)
     axes = _create_axes(nrows, ncols)
-    for trace, ax in zip(traces, axes):
-        fig.add_trace(trace.graph, row=ax[0], col=ax[1])
-        fig.update_xaxes(
-            title_text=trace.labels.xlabel,
-            row=ax[0], col=ax[1]
-        )
-        fig.update_yaxes(
-            title_text=trace.labels.ylabel,
-            row=ax[0], col=ax[1]
-        )
+    for trace, ax in zip(trace_container, axes):
+        # if it's a single trace
+        if isinstance(trace.graph, BaseTraceType):
+            fig.add_trace(trace.graph, row=ax[0], col=ax[1])
+        else:
+            for graph in trace.graph:
+                fig.add_trace(graph, row=ax[0], col=ax[1])
+        fig.update_xaxes(title_text=trace.labels.xlabel, row=ax[0], col=ax[1])
+        fig.update_yaxes(title_text=trace.labels.ylabel, row=ax[0], col=ax[1])
     return fig
+
+
+def identity_fn(x: Any) -> Any:
+    return x
+
+
+def overlay_histogram(
+    df: pd.DataFrame,
+    x: str,
+    hue: str,
+    transform_fn: Callable[..., Any] = identity_fn,
+    to_replace: Optional[dict[str, Any]] = None,
+    **kwds
+) -> list[BaseTraceType]:
+
+    tmp = df[[x, hue]].dropna()
+    color = tmp[hue]
+    if to_replace is not None:
+        color = color.replace(to_replace)
+    fig = px.histogram(x=transform_fn(tmp[x]), color=color, nbins=30, **kwds)
+    return list(fig.select_traces())
+
+
+def overlay_boxplot(
+    df: pd.DataFrame,
+    x: str,
+    hue: str,
+    transform_fn: Callable[..., Any] = identity_fn,
+    to_replace: Optional[dict[str, Any]] = None,
+    **kwds
+) -> list[BaseTraceType]:
+
+    tmp = df[[x, hue]].dropna()
+    color = tmp[hue]
+    if to_replace is not None:
+        color = color.replace(to_replace)
+    fig = px.box(x=transform_fn(tmp[x]), y=color,
+                 color=color, **kwds)
+    return list(fig.select_traces())

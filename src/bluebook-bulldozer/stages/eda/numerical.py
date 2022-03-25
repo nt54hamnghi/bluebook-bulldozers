@@ -5,7 +5,7 @@ import streamlit as st
 import plotly.graph_objects as go
 
 from dirs import CONTENT_DIR
-from utils.graph import Trace, AxesLabel
+from utils.graph import TraceContainer, AxesLabel
 from sklearn.preprocessing import minmax_scale
 
 
@@ -17,7 +17,7 @@ def run(train: pd.Series) -> None:
     ut.display_header("`YearMade`", 4)
     ut.display_content(CONTENT_DIR / "yearmade.txt")
     year_grps = train.groupby("YearMade")["SalePrice"].mean()
-    boxplot = Trace(
+    boxplot = TraceContainer(
         go.Box(
             x=train["YearMade"],
             boxpoints="outliers",
@@ -25,7 +25,7 @@ def run(train: pd.Series) -> None:
         ),
         AxesLabel("Year Made", ""),
     )
-    lineplot = Trace(
+    lineplot = TraceContainer(
         go.Scatter(x=year_grps.index, y=year_grps, mode="lines"),
         AxesLabel("Year Made", "Mean Sale Price"),
     )
@@ -38,10 +38,10 @@ def run(train: pd.Series) -> None:
     with st.expander("Note"):
         ut.display_content(CONTENT_DIR / "machinehour-p2.txt")
     x = train["MachineHoursCurrentMeter"]
-    pre_violon = Trace(
+    pre_violon = TraceContainer(
         go.Violin(x=x, name="Pre-transformed"), AxesLabel("Hour", "")
     )
-    pos_violin = Trace(
+    pos_violin = TraceContainer(
         go.Violin(
             x=np.log1p(x),
             name="Post-transformed",
@@ -67,14 +67,14 @@ def run(train: pd.Series) -> None:
     # MachineID
     ut.display_header("`MachineID`", 4)
     x = train["MachineID"]
-    pre_scatter = Trace(
+    pre_scatter = TraceContainer(
         go.Scattergl(
             x=x, y=y, mode="markers", marker=dict(line_width=0, size=2)
         ),
         AxesLabel("Machine ID", "Sale Price"),
     )
 
-    pos_scatter = Trace(
+    pos_scatter = TraceContainer(
         go.Scattergl(
             x=minmax_scale(x.map(x.value_counts())),
             y=y,

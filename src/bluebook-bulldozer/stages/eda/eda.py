@@ -4,7 +4,7 @@ import pandas as pd
 import streamlit as st
 
 from dirs import CONTENT_DIR
-from stages.eda import numerical
+from stages.eda import numerical, categorical
 
 
 def run(train: pd.DataFrame, valid: pd.DataFrame) -> None:
@@ -12,7 +12,7 @@ def run(train: pd.DataFrame, valid: pd.DataFrame) -> None:
 
     inspect = st.container()
     numvars = st.container()
-    # catvars = st.container()
+    catvars = st.container()
     # datevars = st.container()
 
     with inspect:
@@ -33,3 +33,5 @@ def run(train: pd.DataFrame, valid: pd.DataFrame) -> None:
 
     with numvars:
         numerical.run(train)
+    with catvars:
+        categorical.run(train)
