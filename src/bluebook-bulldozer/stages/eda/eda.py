@@ -9,29 +9,29 @@ from stages.eda import numerical, categorical
 
 def run(train: pd.DataFrame, valid: pd.DataFrame) -> None:
     st.header("Explanatory Data Analysis")
+    with st.container():
 
-    inspect = st.container()
-    numvars = st.container()
-    catvars = st.container()
-    # datevars = st.container()
+        sections = st.selectbox(
+            "Select Sections",
+            options=["Pre-Analysis", "Numerical", "Categorical"],
+        )
 
-    with inspect:
-        st.subheader("1. Initial Inspection")
-        ut.display_header("Removing Unnecessary Variables", 4)
-        ut.display_content(CONTENT_DIR / "dropcols.txt")
+        if sections == "Pre-Analysis":
+            st.subheader(f"1. {sections}")
+            ut.display_header("Removing Unnecessary Variables", 4)
+            ut.display_content(CONTENT_DIR / "dropcols.txt")
 
-        ut.display_header("Investigating Feature Summary", 4)
-        uniques = train.select_dtypes(include=["number"]).nunique()
-        uniques.name = "unique"
-        ut.styleit(st.table)(train.describe().append(uniques))
-        ut.display_content(CONTENT_DIR / "summary.txt")
+            ut.display_header("Investigating Feature Summary", 4)
+            uniques = train.select_dtypes(include=["number"]).nunique()
+            uniques.name = "unique"
+            ut.styleit(st.table)(train.describe().append(uniques))
+            ut.display_content(CONTENT_DIR / "summary.txt")
 
-    train["YearMade"] = train["YearMade"].replace(1000, np.nan)
-    train["MachineHoursCurrentMeter"] = train[
-        "MachineHoursCurrentMeter"
-    ].replace(0, np.nan)
-
-    with numvars:
-        numerical.run(train)
-    with catvars:
-        categorical.run(train)
+            train["YearMade"] = train["YearMade"].replace(1000, np.nan)
+            train["MachineHoursCurrentMeter"] = train[
+                "MachineHoursCurrentMeter"
+            ].replace(0, np.nan)
+        elif sections == "Numerical":
+            numerical.run(train)
+        elif sections == "categorical":
+            categorical.run(train)
