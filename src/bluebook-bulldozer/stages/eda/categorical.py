@@ -10,14 +10,18 @@ from utils.graph import TraceContainer, AxesLabel
 def run(dataframe: pd.DataFrame) -> None:
     st.subheader("3. Categorical Variables")
 
-    # ProductSize
-    ut.display_header("`ProductSize`", 4)
-    categorical_graphs(dataframe, "ProductSize")
-
     # Enclosure
     ut.display_header("`Enclosure`", 4)
     to_replace = {"EROPS AC": "EROPS w AC", "None or Unspecified": "NO ROPS"}
     categorical_graphs(dataframe, "Enclosure", to_replace)
+
+    # UsageBand
+    ut.display_header("`UsageBand`", 4)
+    categorical_graphs(dataframe, "UsageBand")
+
+    # ProductSize
+    ut.display_header("`ProductSize`", 4)
+    categorical_graphs(dataframe, "ProductSize")
 
 
 def categorical_graphs(
