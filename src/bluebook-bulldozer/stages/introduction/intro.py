@@ -24,7 +24,7 @@ def _load_data_dict() -> pd.DataFrame:
     return data_dict
 
 
-def run(train: pd.DataFrame, valid: pd.DataFrame) -> None:
+def run(dataframe: pd.DataFrame) -> None:
     st.header("Introduction")
 
     overview = st.container()
@@ -46,11 +46,11 @@ def run(train: pd.DataFrame, valid: pd.DataFrame) -> None:
 
         # load data description
         data_dict = _load_data_dict()
-        ut.styleit(st.dataframe)(train.head(20), height=1000)
+        ut.styleit(st.dataframe)(dataframe.head(20), height=1000)
 
         st.write(
-            f"Shape:\n\nTraining Set:`{train.shape}`\n\nValidation Set:`{valid.shape}`" # NOQA
-        )  # noqa
+            f"Shape:\n\nTraining Set:`{dataframe.shape}`\n\nValidation Set:`{(11573, 50)}`" # NOQA
+        )
 
         # drop-down box for selecting feature to display description
         ut.display_header("Feature Description", 4)
@@ -60,7 +60,7 @@ def run(train: pd.DataFrame, valid: pd.DataFrame) -> None:
 
         # display summary of the chosen feature
         try:
-            x = train[feat]
+            x = dataframe[feat]
         except KeyError:
             pass
         else:

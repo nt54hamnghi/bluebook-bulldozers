@@ -7,7 +7,7 @@ from dirs import CONTENT_DIR
 from stages.eda import numerical, categorical
 
 
-def run(train: pd.DataFrame, valid: pd.DataFrame) -> None:
+def run(dataframe: pd.DataFrame) -> None:
     st.header("Explanatory Data Analysis")
     with st.container():
 
@@ -22,16 +22,16 @@ def run(train: pd.DataFrame, valid: pd.DataFrame) -> None:
             ut.display_content(CONTENT_DIR / "dropcols.txt")
 
             ut.display_header("Investigating Feature Summary", 4)
-            uniques = train.select_dtypes(include=["number"]).nunique()
+            uniques = dataframe.select_dtypes(include=["number"]).nunique()
             uniques.name = "unique"
-            ut.styleit(st.table)(train.describe().append(uniques))
+            ut.styleit(st.table)(dataframe.describe().append(uniques))
             ut.display_content(CONTENT_DIR / "summary.txt")
 
-            train["YearMade"] = train["YearMade"].replace(1000, np.nan)
-            train["MachineHoursCurrentMeter"] = train[
+            dataframe["YearMade"] = dataframe["YearMade"].replace(1000, np.nan)
+            dataframe["MachineHoursCurrentMeter"] = dataframe[
                 "MachineHoursCurrentMeter"
             ].replace(0, np.nan)
         elif sections == "Numerical":
-            numerical.run(train)
+            numerical.run(dataframe)
         elif sections == "categorical":
-            categorical.run(train)
+            categorical.run(dataframe)

@@ -16,14 +16,13 @@ def _load_data(filename: str) -> pd.DataFrame:
 def _prepare_data() -> dict[str, tuple[pd.DataFrame, ...]]:
     # Raw data
     raw_train = _load_data("raw_train.feather")
-    raw_valid = _load_data("raw_valid.feather")
     # Processed dataj
     xtrn = _load_data("xtrn.feather")
     xval = _load_data("xval.feather")
     ytrn = _load_data("ytrn.feather").iloc[:, 0]
     yval = _load_data("yval.feather").iloc[:, 0]
 
-    return dict(raw=(raw_train, raw_valid), trn_valid=(xtrn, xval, ytrn, yval))
+    return dict(raw=(raw_train,), trn_valid=(xtrn, xval, ytrn, yval))
 
 
 def main():
@@ -35,14 +34,16 @@ def main():
 
     # load data
     data = _prepare_data()
-    raw_train, raw_valid = data["raw"]
+    raw_train = data["raw"][0]
     xtrn, xval, ytrn, yval = data["trn_valid"]
+
+    print(raw_train)
 
     # match page/stage
     if stage == "Introduction":
-        stages.intro.run(raw_train, raw_valid)
+        stages.intro.run(raw_train)
     elif stage == "EDA":
-        stages.eda.run(raw_train, raw_valid)
+        stages.eda.run(raw_train)
     elif stage == "Modeling":
         stages.models.run((xtrn, ytrn), (xval, yval))
 

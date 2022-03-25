@@ -9,17 +9,17 @@ from utils.graph import TraceContainer, AxesLabel
 from sklearn.preprocessing import minmax_scale
 
 
-def run(train: pd.Series) -> None:
-    y = train["SalePrice"]
+def run(dataframe: pd.Series) -> None:
+    y = dataframe["SalePrice"]
     st.subheader("2. Numerical Variables")
 
     # YearMade
     ut.display_header("`YearMade`", 4)
     ut.display_content(CONTENT_DIR / "yearmade.txt")
-    year_grps = train.groupby("YearMade")["SalePrice"].mean()
+    year_grps = dataframe.groupby("YearMade")["SalePrice"].mean()
     boxplot = TraceContainer(
         go.Box(
-            x=train["YearMade"],
+            x=dataframe["YearMade"],
             boxpoints="outliers",
             quartilemethod="inclusive",
         ),
@@ -37,7 +37,7 @@ def run(train: pd.Series) -> None:
     ut.display_content(CONTENT_DIR / "machinehour-p1.txt")
     with st.expander("Note"):
         ut.display_content(CONTENT_DIR / "machinehour-p2.txt")
-    x = train["MachineHoursCurrentMeter"]
+    x = dataframe["MachineHoursCurrentMeter"]
     pre_violon = TraceContainer(
         go.Violin(x=x, name="Pre-transformed"), AxesLabel("Hour", "")
     )
@@ -66,7 +66,7 @@ def run(train: pd.Series) -> None:
     )
     # MachineID
     ut.display_header("`MachineID`", 4)
-    x = train["MachineID"]
+    x = dataframe["MachineID"]
     pre_scatter = TraceContainer(
         go.Scattergl(
             x=x, y=y, mode="markers", marker=dict(line_width=0, size=2)

@@ -7,17 +7,17 @@ from typing import Any, Optional
 from utils.graph import TraceContainer, AxesLabel
 
 
-def run(train: pd.Series) -> None:
+def run(dataframe: pd.DataFrame) -> None:
     st.subheader("3. Categorical Variables")
 
     # ProductSize
     ut.display_header("`ProductSize`", 4)
-    categorical_graphs(train, "ProductSize")
+    categorical_graphs(dataframe, "ProductSize")
 
     # Enclosure
     ut.display_header("`Enclosure`", 4)
     to_replace = {"EROPS AC": "EROPS w AC", "None or Unspecified": "NO ROPS"}
-    categorical_graphs(train, "Enclosure", to_replace)
+    categorical_graphs(dataframe, "Enclosure", to_replace)
 
 
 def categorical_graphs(
