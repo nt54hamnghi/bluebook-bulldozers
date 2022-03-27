@@ -18,19 +18,27 @@ def run(dataframe: pd.DataFrame) -> None:
             options=["Pre-Analysis", "Numerical", "Categorical"],
         )
         random_sample = st.checkbox("Resample Each Time")
-        random_state = random.randint(0, int(time())) if random_sample else 0
-        dataframe = dataframe.sample(
-            frac=0.25, replace=False, random_state=random_state
-        )
 
         with st.expander("Note:"):
-            st.write("""
+            st.write(
+                """
                 This analysis use a random sample from the original data set.
-                It has 100,000 rows and stays static throughout multiple runs.
+                It has 45,000 rows and stays static throughout multiple runs.
                 To generate new sample set each run.
                 Click the checkbox above.
-            """)
+            """
+            )
 
+        dataframe.replace(
+            {"YearMade": 1000, "MachineHoursCurrentMeter": 0},
+            value=np.nan, inplace=True
+        )
+        random_state = (
+            random.randint(0, int(time())) if random_sample else 0
+        )
+        dataframe = dataframe.sample(
+            frac=.125, replace=True, random_state=random_state
+        )
         if sections == "Pre-Analysis":
             st.subheader(f"1. {sections}")
             ut.display_header("Removing Unnecessary Variables", 4)
@@ -42,12 +50,6 @@ def run(dataframe: pd.DataFrame) -> None:
             ut.styleit(st.table)(dataframe.describe().append(uniques))
             ut.display_content(CONTENT_DIR / "summary.txt")
 
-            dataframe["YearMade"] = dataframe["YearMade"].replace(
-                1000, np.nan
-            )
-            dataframe["MachineHoursCurrentMeter"] = dataframe[
-                "MachineHoursCurrentMeter"
-            ].replace(0, np.nan)
         elif sections == "Numerical":
             numerical.run(dataframe)
         elif sections == "Categorical":
