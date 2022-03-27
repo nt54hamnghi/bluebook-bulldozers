@@ -5,7 +5,6 @@ import pandas as pd
 import streamlit as st
 
 from time import time
-from dirs import CONTENT_DIR
 from stages.eda import numerical, categorical
 
 
@@ -42,13 +41,13 @@ def run(dataframe: pd.DataFrame) -> None:
         if sections == "Pre-Analysis":
             st.subheader(f"1. {sections}")
             ut.display_header("Removing Unnecessary Variables", 4)
-            ut.display_content(CONTENT_DIR / "dropcols.txt")
+            ut.display_content("dropcols.txt")
 
             ut.display_header("Investigating Feature Summary", 4)
             uniques = dataframe.select_dtypes(include=["number"]).nunique()
             uniques.name = "unique"
             ut.styleit(st.table)(dataframe.describe().append(uniques))
-            ut.display_content(CONTENT_DIR / "summary.txt")
+            ut.display_content("summary.txt")
 
         elif sections == "Numerical":
             numerical.run(dataframe)

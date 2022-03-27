@@ -7,8 +7,8 @@ from decorator import decorator
 from functools import singledispatch
 from pandas.io.formats.style import Styler
 
-# import from typehint
 from .typehint import P, R
+from dirs import CONTENT_DIR
 
 
 DF_STYLE = {
@@ -23,8 +23,13 @@ def display_header(header: str, level: int = 1) -> None:
     st.markdown(f"{prefix} {header}")
 
 
-def display_content(content_file: str | pathlib.Path) -> None:
-    with open(content_file) as f:
+def display_content(
+    filename: str | pathlib.Path,
+    default_dir: pathlib.Path = CONTENT_DIR
+) -> None:
+    if default_dir is not None:
+        filename = default_dir / filename
+    with open(filename) as f:
         st.markdown(f.read())
 
 

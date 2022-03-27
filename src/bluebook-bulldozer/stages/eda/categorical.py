@@ -5,7 +5,6 @@ import streamlit as st
 
 from typing import Any, Optional
 from utils.graph import TraceContainer, AxesLabel
-from dirs import CONTENT_DIR
 
 
 def run(dataframe: pd.DataFrame) -> None:
@@ -14,17 +13,17 @@ def run(dataframe: pd.DataFrame) -> None:
     # Enclosure
     ut.display_header("`Enclosure`", 4)
     to_replace = {"EROPS AC": "EROPS w AC", "None or Unspecified": "NO ROPS"}
-    ut.display_content(CONTENT_DIR / "enclosure.txt")
+    ut.display_content("enclosure.txt")
     categorical_graphs(dataframe, "Enclosure", to_replace)
 
     # UsageBand
     ut.display_header("`UsageBand`", 4)
-    ut.display_content(CONTENT_DIR / "usageband.txt")
+    ut.display_content("usageband.txt")
     categorical_graphs(dataframe, "UsageBand")
 
     # Drive_System
     ut.display_header("`Drive_System`", 4)
-    ut.display_content(CONTENT_DIR / "drivesys.txt")
+    ut.display_content("drivesys.txt")
     categorical_graphs(dataframe, "Drive_System")
 
 

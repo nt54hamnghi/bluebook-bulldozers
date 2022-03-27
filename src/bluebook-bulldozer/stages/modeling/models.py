@@ -5,7 +5,6 @@ import plotly.graph_objects as go
 
 from typing import Any
 
-from dirs import CONTENT_DIR
 from stages.modeling.configuration.config import RandomForestSetup
 from stages.modeling.configuration.config import ExtraTreesSetup
 from stages.modeling.configuration.config import GradientBoostingSetup
@@ -128,4 +127,4 @@ def run(
                 )
 
                 with st.expander("NOTE: "):
-                    ut.display_content(CONTENT_DIR / "featimp-note.txt")
+                    ut.display_content("featimp-note.txt")

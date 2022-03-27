@@ -3,7 +3,7 @@ import pandas as pd
 import streamlit as st
 import plotly.graph_objects as go
 
-from dirs import DATA_DIR, CONTENT_DIR
+from dirs import DATA_DIR
 
 
 @st.experimental_singleton(show_spinner=False)
@@ -33,7 +33,7 @@ def run(dataframe: pd.DataFrame) -> None:
     # 1. overview
     with overview:
         st.subheader("1. Overview")
-        ut.display_content(CONTENT_DIR / "overview.txt")
+        ut.display_content("overview.txt")
 
     # 2. data
     with data:

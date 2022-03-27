@@ -4,7 +4,6 @@ import utils as ut
 import streamlit as st
 import plotly.graph_objects as go
 
-from dirs import CONTENT_DIR
 from utils.graph import TraceContainer, AxesLabel
 from sklearn.preprocessing import minmax_scale
 
@@ -15,7 +14,7 @@ def run(dataframe: pd.Series) -> None:
 
     # YearMade
     ut.display_header("`YearMade`", 4)
-    ut.display_content(CONTENT_DIR / "yearmade.txt")
+    ut.display_content("yearmade.txt")
     year_grps = dataframe.groupby("YearMade")["SalePrice"].mean()
     boxplot = TraceContainer(
         go.Box(
@@ -37,9 +36,9 @@ def run(dataframe: pd.Series) -> None:
 
     # MachineHoursCurrentMeter
     ut.display_header("`MachineHoursCurrentMeter`", 4)
-    ut.display_content(CONTENT_DIR / "machinehour-p1.txt")
+    ut.display_content("machinehour-p1.txt")
     with st.expander("Note"):
-        ut.display_content(CONTENT_DIR / "machinehour-p2.txt")
+        ut.display_content("machinehour-p2.txt")
 
     x = dataframe["MachineHoursCurrentMeter"]
     pre_violon = TraceContainer(
@@ -58,7 +57,7 @@ def run(dataframe: pd.Series) -> None:
         mode="markers",
         marker=dict(line_width=0, size=4),
     )
-    ut.display_content(CONTENT_DIR / "machinehour-p3.txt")
+    ut.display_content("machinehour-p3.txt")
     ut.render(
         go.Figure(scatter),
         layout=dict(
@@ -69,7 +68,7 @@ def run(dataframe: pd.Series) -> None:
     )
     # MachineID
     ut.display_header("`MachineID`", 4)
-    ut.display_content(CONTENT_DIR / "machineid.txt")
+    ut.display_content("machineid.txt")
     x = dataframe["MachineID"]
     pre_scatter = TraceContainer(
         go.Scattergl(
