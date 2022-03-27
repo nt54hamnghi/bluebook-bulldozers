@@ -14,4 +14,4 @@ RUN mkdir -p /usr/app \
 
 WORKDIR /usr/app
 
-CMD ["python", "run.py"]
+CMD ["streamlit", "run", "app.py"]
