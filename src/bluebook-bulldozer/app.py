@@ -5,7 +5,7 @@ import stages
 from dirs import DATA_DIR
 
 __version__ = "0.0.1"
-STAGES = ("Introduction", "EDA", "Modeling", "Feature Selection")
+STAGES = ("Introduction", "EDA", "Modeling")
 
 
 def _load_data(filename: str) -> pd.DataFrame:
