@@ -1,17 +1,19 @@
-FROM continuumio/miniconda:latest
+FROM continuumio/miniconda3
 
 WORKDIR /build
-# While iterating on build, copy app/ and/or src/ contents separately AFTER conda setup.
-# This will enable docker to cache more layers.
-COPY . /build/
 
-RUN mkdir -p /usr/app \
-    && mv /build/app /usr/ \
-    && pip install /build/src/. \
-    && conda install --file requirements.txt \
-    && conda clean -y --all \
-    && rm -r /build
+COPY environment.yml /build/
 
-WORKDIR /usr/app
+RUN conda env create --file environment.yml \
+    && mkdir -p /home/app
 
-CMD ["streamlit", "run", "app.py"]
+COPY . /home/app
+
+WORKDIR /home/app
+
+# Make RUN commands use the new environment:
+SHELL ["conda", "run", "-n", "streamlit", "/bin/bash", "-c"]
+
+EXPOSE 8501
+
+ENTRYPOINT ["conda", "run", "--no-capture-output", "-n", "streamlit", "streamlit", "run", "./src/bluebook-bulldozer/app.py"]
