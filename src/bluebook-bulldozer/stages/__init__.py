@@ -1,3 +1,3 @@
-from stages.introduction import intro
-from stages.modeling import models
-from stages.eda import eda
+from stages.introduction import intro  # NOQA
+from stages.modeling import models  # NOQA
+from stages.eda import eda  # NOQA
