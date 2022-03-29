@@ -1,5 +1,6 @@
 name: streamlit
 channels:
+  - plotly
   - defaults
 dependencies:
   - python=3.10
@@ -7,10 +8,10 @@ dependencies:
   - pandas
   - seaborn
   - matplotlib
+  - plotly
   - pip
   - pip:
     - streamlit==1.7.0
     - click==8.0.4
     - colormap
     - easydev
-    - plotly
