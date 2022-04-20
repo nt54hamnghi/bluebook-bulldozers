@@ -11,7 +11,8 @@ dependencies:
   - plotly
   - pip
   - pip:
-    - streamlit==1.7.0
-    - click==8.0.4
+    - streamlit==1.7.*
+    - click==8.0.*
     - colormap
     - easydev
+ 
