@@ -1,13 +1,14 @@
-import time
 import json
 import logging
 import pathlib
-
+import time
 from types import SimpleNamespace
-from decorator import decorator
 from typing import Any, Callable, Optional
 
+from decorator import decorator
+
 from dirs import LOG_DIR
+
 from .typehint import P, R
 
 # basic logging config

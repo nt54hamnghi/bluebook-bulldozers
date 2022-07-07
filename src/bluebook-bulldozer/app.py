@@ -1,7 +1,7 @@
 import pandas as pd
 import streamlit as st
-import stages
 
+import stages
 from dirs import DATA_DIR
 
 __version__ = "0.0.1"

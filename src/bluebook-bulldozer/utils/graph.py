@@ -1,15 +1,15 @@
 import itertools
-import numpy as np
+from typing import Any, Callable, NamedTuple, Optional
+
 import colormap as cm
+import numpy as np
 import pandas as pd
+import plotly.express as px
 import seaborn as sns
 import streamlit as st
-import plotly.express as px
-
+from plotly.basedatatypes import BaseTraceType
 from plotly.graph_objects import Figure
 from plotly.subplots import make_subplots
-from plotly.basedatatypes import BaseTraceType
-from typing import Any, Callable, NamedTuple, Optional
 
 PRIMARY_COLOR = "#636efa"
 CM_BLUE = sns.dark_palette(color=PRIMARY_COLOR, as_cmap=True)
@@ -114,6 +114,5 @@ def overlay_boxplot(
     color = tmp[hue]
     if to_replace is not None:
         color = color.replace(to_replace)
-    fig = px.box(x=transform_fn(tmp[x]), y=color,
-                 color=color, **kwds)
+    fig = px.box(x=transform_fn(tmp[x]), y=color, color=color, **kwds)
     return list(fig.select_traces())

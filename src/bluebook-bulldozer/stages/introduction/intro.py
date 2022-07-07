@@ -1,8 +1,8 @@
-import utils as ut
 import pandas as pd
-import streamlit as st
 import plotly.graph_objects as go
+import streamlit as st
 
+import utils as ut
 from dirs import DATA_DIR
 
 
@@ -49,7 +49,7 @@ def run(dataframe: pd.DataFrame) -> None:
         ut.styleit(st.dataframe)(dataframe.head(20), height=1000)
 
         st.write(
-            f"Shape:\n\nTraining Set:`{dataframe.shape}`\n\nValidation Set:`{(11573, 50)}`" # NOQA
+            f"Shape:\n\nTraining Set:`{dataframe.shape}`\n\nValidation Set:`{(11573, 50)}`"  # NOQA
         )
 
         # drop-down box for selecting feature to display description
@@ -83,9 +83,9 @@ def run(dataframe: pd.DataFrame) -> None:
                         height=525,
                         xaxis_title=feat,
                         yaxis_title="Count",
-                    )
+                    ),
                 )
 
         st.warning(
-            "__WARNING__: The data is its raw form. The graph and summary statistics of some variables may not be reasonable." # NOQA
+            "__WARNING__: The data is its raw form. The graph and summary statistics of some variables may not be reasonable."  # NOQA
         )

@@ -1,14 +1,14 @@
 import logging
-import pandas as pd
-import numpy as np
-
 from inspect import getfullargspec
 from typing import Any, Callable, Sequence
+
+import numpy as np
+import pandas as pd
 from sklearn.exceptions import NotFittedError
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
-from .typehint import NumberSequence
 from .helper import create_logger
+from .typehint import NumberSequence
 
 
 def rmse_score(y_true, y_pred):
@@ -37,7 +37,7 @@ def evalutate(
             arg_specs = getfullargspec(fn).args
             if arg_specs != ["y_true", "y_pred"]:
                 err = ValueError(
-                    f"{fn.__name__} does not contain argument specifications: {arg_specs}" # NOQA
+                    f"{fn.__name__} does not contain argument specifications: {arg_specs}"  # NOQA
                 )
                 EVAL_LOGGER.error(repr(err))
                 raise err

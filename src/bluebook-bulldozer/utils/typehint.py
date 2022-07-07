@@ -1,4 +1,4 @@
-from typing import Sequence, TypeVar, ParamSpec, Union, TypeAlias
+from typing import ParamSpec, Sequence, TypeAlias, TypeVar, Union
 
 R = TypeVar("R")
 P = ParamSpec("P")

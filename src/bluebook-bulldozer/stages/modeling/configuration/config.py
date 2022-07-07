@@ -1,11 +1,14 @@
 import pathlib
-import utils as ut
-import streamlit as st
-
 from typing import Any
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.ensemble import ExtraTreesRegressor
-from sklearn.ensemble import GradientBoostingRegressor
+
+import streamlit as st
+from sklearn.ensemble import (
+    ExtraTreesRegressor,
+    GradientBoostingRegressor,
+    RandomForestRegressor,
+)
+
+import utils as ut
 
 CURR_DIR = pathlib.Path(__file__).parent
 JSON_DIR = CURR_DIR / "config-json"

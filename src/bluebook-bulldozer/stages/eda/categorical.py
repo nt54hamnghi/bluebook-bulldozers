@@ -1,10 +1,11 @@
+from typing import Any, Optional
+
 import numpy as np
 import pandas as pd
-import utils as ut
 import streamlit as st
 
-from typing import Any, Optional
-from utils.graph import TraceContainer, AxesLabel
+import utils as ut
+from utils.graph import AxesLabel, TraceContainer
 
 
 def run(dataframe: pd.DataFrame) -> None:
@@ -49,7 +50,7 @@ def categorical_graphs(
             to_replace=to_replace,
             transform_fn=np.log1p,
         ),
-        AxesLabel("Log of Sale Price", "")
+        AxesLabel("Log of Sale Price", ""),
     )
 
     fig = ut.subplots([box, hist], nrows=1, ncols=2)

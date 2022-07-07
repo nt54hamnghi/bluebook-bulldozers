@@ -1,13 +1,15 @@
-import utils as ut
-import pandas as pd
-import streamlit as st
-import plotly.graph_objects as go
-
 from typing import Any
 
-from stages.modeling.configuration.config import RandomForestSetup
-from stages.modeling.configuration.config import ExtraTreesSetup
-from stages.modeling.configuration.config import GradientBoostingSetup
+import pandas as pd
+import plotly.graph_objects as go
+import streamlit as st
+
+import utils as ut
+from stages.modeling.configuration.config import (
+    ExtraTreesSetup,
+    GradientBoostingSetup,
+    RandomForestSetup,
+)
 
 MODEL_LOGGER = ut.create_logger(name="models", logfile="fit.log")
 MODELS = {
@@ -123,7 +125,7 @@ def run(
                         colorscale_sequential=ut.cmap2hexlist(),
                         xaxis_title="Importance",
                         yaxis_title="Variables",
-                    )
+                    ),
                 )
 
                 with st.expander("NOTE: "):

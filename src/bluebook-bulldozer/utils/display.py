@@ -1,15 +1,15 @@
 import pathlib
+from functools import singledispatch
+from typing import Callable
+
 import pandas as pd
 import streamlit as st
-
-from typing import Callable
 from decorator import decorator
-from functools import singledispatch
 from pandas.io.formats.style import Styler
 
-from .typehint import P, R
 from dirs import CONTENT_DIR
 
+from .typehint import P, R
 
 DF_STYLE = {
     "border-width": "2.5px",
@@ -24,8 +24,7 @@ def display_header(header: str, level: int = 1) -> None:
 
 
 def display_content(
-    filename: str | pathlib.Path,
-    default_dir: pathlib.Path = CONTENT_DIR
+    filename: str | pathlib.Path, default_dir: pathlib.Path = CONTENT_DIR
 ) -> None:
     if default_dir is not None:
         filename = default_dir / filename

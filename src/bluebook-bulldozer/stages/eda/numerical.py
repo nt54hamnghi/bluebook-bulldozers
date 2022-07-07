@@ -1,11 +1,11 @@
 import numpy as np
 import pandas as pd
-import utils as ut
-import streamlit as st
 import plotly.graph_objects as go
-
-from utils.graph import TraceContainer, AxesLabel
+import streamlit as st
 from sklearn.preprocessing import minmax_scale
+
+import utils as ut
+from utils.graph import AxesLabel, TraceContainer
 
 
 def run(dataframe: pd.Series) -> None:
@@ -30,9 +30,7 @@ def run(dataframe: pd.Series) -> None:
         AxesLabel("Year Made", "Mean Sale Price"),
     )
     fig = ut.subplots([boxplot, lineplot], nrows=1, ncols=2)
-    ut.render(
-        fig, layout=dict(height=400, showlegend=False)
-    )
+    ut.render(fig, layout=dict(height=400, showlegend=False))
 
     # MachineHoursCurrentMeter
     ut.display_header("`MachineHoursCurrentMeter`", 4)
@@ -42,8 +40,7 @@ def run(dataframe: pd.Series) -> None:
 
     x = dataframe["MachineHoursCurrentMeter"]
     pre_violon = TraceContainer(
-        go.Violin(x=x, name="Before"),
-        AxesLabel("Hour", "")
+        go.Violin(x=x, name="Before"), AxesLabel("Hour", "")
     )
     pos_violin = TraceContainer(
         go.Violin(x=np.log1p(x), name="After"),
@@ -53,7 +50,8 @@ def run(dataframe: pd.Series) -> None:
     ut.render(fig, layout=dict(height=400, showlegend=False))
 
     scatter = go.Scattergl(
-        x=np.log1p(x), y=y,
+        x=np.log1p(x),
+        y=y,
         mode="markers",
         marker=dict(line_width=0, size=4),
     )
@@ -61,9 +59,7 @@ def run(dataframe: pd.Series) -> None:
     ut.render(
         go.Figure(scatter),
         layout=dict(
-            xaxis_title="Log of Hour",
-            yaxis_title="Sale Price",
-            height=400
+            xaxis_title="Log of Hour", yaxis_title="Sale Price", height=400
         ),
     )
     # MachineID
@@ -72,8 +68,7 @@ def run(dataframe: pd.Series) -> None:
     x = dataframe["MachineID"]
     pre_scatter = TraceContainer(
         go.Scattergl(
-            x=x, y=y,
-            mode="markers", marker=dict(line_width=0, size=2)
+            x=x, y=y, mode="markers", marker=dict(line_width=0, size=2)
         ),
         AxesLabel("Machine ID", "Sale Price"),
     )

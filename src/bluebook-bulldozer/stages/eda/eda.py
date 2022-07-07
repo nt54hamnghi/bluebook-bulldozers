@@ -1,11 +1,12 @@
 import random
+from time import time
+
 import numpy as np
-import utils as ut
 import pandas as pd
 import streamlit as st
 
-from time import time
-from stages.eda import numerical, categorical
+import utils as ut
+from stages.eda import categorical, numerical
 
 
 def run(dataframe: pd.DataFrame) -> None:
@@ -30,13 +31,12 @@ def run(dataframe: pd.DataFrame) -> None:
 
         dataframe.replace(
             {"YearMade": 1000, "MachineHoursCurrentMeter": 0},
-            value=np.nan, inplace=True
+            value=np.nan,
+            inplace=True,
         )
-        random_state = (
-            random.randint(0, int(time())) if random_sample else 0
-        )
+        random_state = random.randint(0, int(time())) if random_sample else 0
         dataframe = dataframe.sample(
-            frac=.125, replace=True, random_state=random_state
+            frac=0.125, replace=True, random_state=random_state
         )
         if sections == "Pre-Analysis":
             st.subheader(f"1. {sections}")
